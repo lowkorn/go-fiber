@@ -1,5 +1,5 @@
 # go-fiber
-## Implement clean architect with fiber ⚡️
+## Implement clean architecture with fiber ⚡️
 
 #### Project structure
 ```
