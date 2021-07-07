@@ -1,9 +1,12 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	handler "github.com/lowkorn/vaccine-reservation/handler/vaccine"
+	"github.com/lowkorn/vaccine-reservation/pkg/service"
 	"github.com/lowkorn/vaccine-reservation/pkg/vaccine"
 )
 
@@ -11,7 +14,13 @@ func main() {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	vacReservRepo := vaccine.NewInmemInstance()
+	mongoClient, err := service.NewMongoConnection("mongodb://root:root@localhost:27017")
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	// vacReservRepo := vaccine.NewInmemInstance()
+	vacReservRepo := vaccine.NewMongoClient(&mongoClient)
 	vacReservUC := vaccine.NewUsecase(vacReservRepo)
 	vacReserveRoute := handler.NewVaccineReservationRoute(vacReservUC)
 

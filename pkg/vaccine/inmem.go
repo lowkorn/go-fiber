@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lowkorn/vaccine-reservation/util"
+	"github.com/lowkorn/vaccine-reservation/pkg/util"
 )
 
 type InMemDriver struct {
