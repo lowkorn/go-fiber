@@ -1,4 +1,4 @@
-package vaccine
+package entity
 
 type Vaccine struct {
 	ID           string `json:"id" bson:"_id"`

@@ -4,11 +4,12 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/lowkorn/vaccine-reservation/pkg/vaccine"
+	"github.com/lowkorn/vaccine-reservation/pkg/entity"
+	"github.com/lowkorn/vaccine-reservation/pkg/usecase"
 )
 
 type VaccineReservationRoute struct {
-	uc vaccine.IUsecase
+	uc usecase.IUsecase
 }
 
 func (r VaccineReservationRoute) GetReservation(c *fiber.Ctx) error {
@@ -31,7 +32,7 @@ func (r VaccineReservationRoute) GetAllVaccineReservation(c *fiber.Ctx) error {
 }
 
 func (r VaccineReservationRoute) CreateReservation(c *fiber.Ctx) error {
-	var body vaccine.Vaccine
+	var body entity.Vaccine
 	err := c.BodyParser(&body)
 	if err != nil {
 		log.Println(err, body)
@@ -47,7 +48,7 @@ func (r VaccineReservationRoute) CreateReservation(c *fiber.Ctx) error {
 
 func (r VaccineReservationRoute) UpdateReservation(c *fiber.Ctx) error {
 	ID := c.Params("id")
-	var body vaccine.Vaccine
+	var body entity.Vaccine
 	err := c.BodyParser(&body)
 	if err != nil {
 		log.Println(err, body)
@@ -71,7 +72,7 @@ func (r VaccineReservationRoute) CancleReservation(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).SendString("success")
 }
 
-func NewVaccineReservationRoute(vaccineUsecase vaccine.IUsecase) VaccineReservationRoute {
+func NewVaccineReservationRoute(vaccineUsecase usecase.IUsecase) VaccineReservationRoute {
 	return VaccineReservationRoute{
 		uc: vaccineUsecase,
 	}

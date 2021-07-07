@@ -5,9 +5,10 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	handler "github.com/lowkorn/vaccine-reservation/handler/vaccine"
+	handler "github.com/lowkorn/vaccine-reservation/pkg/handler/vaccine"
+	repo "github.com/lowkorn/vaccine-reservation/pkg/repo/vaccine"
 	"github.com/lowkorn/vaccine-reservation/pkg/service"
-	"github.com/lowkorn/vaccine-reservation/pkg/vaccine"
+	"github.com/lowkorn/vaccine-reservation/pkg/usecase"
 )
 
 func main() {
@@ -19,9 +20,9 @@ func main() {
 		log.Panicln(err)
 	}
 
-	// vacReservRepo := vaccine.NewInmemInstance()
-	vacReservRepo := vaccine.NewMongoClient(&mongoClient)
-	vacReservUC := vaccine.NewUsecase(vacReservRepo)
+	// vacReservRepo := repo.NewVaccineInMem()
+	vacReservRepo := repo.NewVaccineMongo(&mongoClient)
+	vacReservUC := usecase.NewVaccine(vacReservRepo)
 	vacReserveRoute := handler.NewVaccineReservationRoute(vacReservUC)
 
 	app.Get("/health", func(fiberC *fiber.Ctx) error {
