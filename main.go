@@ -23,9 +23,10 @@ func main() {
 	})
 
 	app.Get("vaccine-reservations/:id", vacReserveRoute.GetReservation)
+	app.Get("vaccine-reservations", vacReserveRoute.GetAllVaccineReservation)
 	app.Post("vaccine-reservations", vacReserveRoute.CreateReservation)
 	app.Put("vaccine-reservations/:id", vacReserveRoute.UpdateReservation)
-	app.Delete("vaccine-reservations/:id", vacReserveRoute.GetReservation)
+	app.Delete("vaccine-reservations/:id", vacReserveRoute.CancleReservation)
 
 	app.Listen(":5000")
 }
